@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ConfigState, CycleState } from './types';
-import { generateFixedScript, generateInitScript, calculateCycleState, generateCryptoScript, generateSchumannScript, generateMiniAppButtonScript } from './utils/cycleLogic';
+import { generateFixedScript, generateInitScript, calculateCycleState, generateMiniAppButtonScript } from './utils/cycleLogic';
 import { CodeGenerator } from './components/CodeGenerator';
 import { MiniAppPreview } from './components/MiniAppPreview';
 
@@ -13,10 +13,10 @@ export default function App() {
     messageId: 0, 
     cryptoMessageId: 0, 
     schumannMessageId: 0,
-    miniAppUrl: "https://litosinkseeds.github.io/MiniAppDeLitosInkSeeds/" 
+    miniAppUrl: window.location.href 
   });
 
-  const [activeTab, setActiveTab] = useState<'SETUP' | 'DAILY' | 'CRYPTO' | 'SCHUMANN' | 'MINIAPP'>('SETUP'); 
+  const [activeTab, setActiveTab] = useState<'SETUP' | 'DAILY' | 'MINIAPP'>('SETUP'); 
   const [cycleState, setCycleState] = useState<CycleState | null>(null);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function App() {
       </header>
 
       <div className="w-full max-w-2xl flex gap-1 bg-slate-900 p-1 rounded-xl mb-6 border border-white/5">
-        {['SETUP', 'DAILY', 'MINIAPP'].map((t: any) => (
+        {(['SETUP', 'DAILY', 'MINIAPP'] as const).map((t) => (
           <button key={t} onClick={() => setActiveTab(t)} className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${activeTab === t ? 'bg-white text-black shadow-lg' : 'text-slate-500'}`}>
             {t}
           </button>
@@ -77,7 +77,9 @@ export default function App() {
         {activeTab === 'MINIAPP' && cycleState && (
           <div className="flex flex-col items-center gap-8">
             <MiniAppPreview state={cycleState} />
-            <CodeGenerator script={generateMiniAppButtonScript()} />
+            <div className="w-full max-w-md">
+                <CodeGenerator script={generateMiniAppButtonScript()} />
+            </div>
           </div>
         )}
       </div>
