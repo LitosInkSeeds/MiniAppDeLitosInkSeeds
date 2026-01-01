@@ -1,27 +1,23 @@
 
-import { GoogleGenAI } from "@google/genai";
-import { CycleState } from '../types';
+export const BREATH_DB = Array(28).fill(null).map((_, i) => ({
+    name: `Respiración Fase ${i + 1}`,
+    desc: "Enfócate en tu flujo vital y la conexión con el ahora."
+}));
 
-export const getEnergyInterpretation = async (state: CycleState): Promise<string> => {
-  const apiKey = process.env.API_KEY;
-  if (!apiKey) {
-    return "Configura API_KEY para obtener guía espiritual.";
-  }
+export const STRETCH_DB = Array(28).fill(null).map((_, i) => ({
+    name: `Estiramiento Solar ${i + 1}`,
+    desc: "Abre tus canales energéticos con movimientos suaves."
+}));
 
-  try {
-    const ai = new GoogleGenAI({ apiKey });
-    
-    const prompt = `Interpreta la energía de hoy: Chakra ${state.chakraName}, Elemento ${state.elementName}, Luna ${state.moonPhase}. Da un consejo breve de 1 frase. Texto plano sin markdown.`;
+export const GYM_DB = Array(28).fill(null).map((_, i) => ({
+    name: `Entreno Natural ${i + 1}`,
+    desc: "Mueve tu cuerpo respetando su diseño biológico."
+}));
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-    });
-
-    const text = response.text;
-    return typeof text === 'string' ? text.trim() : "Fluye con la energía del presente.";
-  } catch (error) {
-    console.error("Gemini Error:", error);
-    return "Siente la conexión con el cosmos en silencio.";
-  }
-};
+export const QUOTES_SPIRIT_DB = Array(28).fill(null).map((_, i) => [
+    "Busca el silencio y encontrarás la luz.",
+    "El presente es el único regalo real.",
+    "La paz nace desde la aceptación.",
+    "Eres un reflejo del cosmos.",
+    "Confía en el proceso de la vida."
+]);
