@@ -1,14 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { CycleState } from '../types';
-import { Wind, PersonStanding, Dumbbell, Hammer, Brain, Moon, Leaf, ChevronLeft, Sun, Wifi, Battery } from 'lucide-react';
+import { Wind, PersonStanding, Dumbbell, Hammer, Brain, Moon, Sun, Wifi, Battery, ChevronLeft } from 'lucide-react';
 import { BREATH_DB, STRETCH_DB, GYM_DB, QUOTES_SPIRIT_DB } from '../utils/dailyDatabase';
 import { CosmicClock } from './CosmicClock';
 
 export const MiniAppPreview: React.FC<{state: CycleState}> = ({ state }) => {
-  const [view, setView] = useState<'HOME' | 'DETAIL'>('HOME');
   const [time, setTime] = useState(new Date());
-  
   const idx = (state.dayOfCycle - 1) % 28;
 
   useEffect(() => {
@@ -26,47 +24,39 @@ export const MiniAppPreview: React.FC<{state: CycleState}> = ({ state }) => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto pt-10 px-4 space-y-4 scrollbar-hide pb-10">
-        {view === 'HOME' ? (
-          <>
-            <div className="text-center py-2">
-               <div className="text-4xl mb-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">{state.moonEmoji}</div>
-               <h1 className="text-lg font-black uppercase tracking-tighter">{state.elementEmoji} {state.elementName}</h1>
-               <p className="text-[9px] text-slate-500 font-bold tracking-[0.2em]">{state.chakraName}</p>
-            </div>
+      <div className="flex-1 overflow-y-auto pt-10 px-4 space-y-4 pb-10 scrollbar-hide">
+        <div className="text-center py-2">
+           <div className="text-4xl mb-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">{state.moonEmoji}</div>
+           <h1 className="text-lg font-black uppercase tracking-tighter">{state.elementEmoji} {state.elementName}</h1>
+           <p className="text-[9px] text-slate-500 font-bold tracking-[0.2em]">{state.chakraName}</p>
+        </div>
 
-            <div className="flex justify-center py-2 scale-75">
-                <CosmicClock size={200} />
-            </div>
+        <div className="flex justify-center py-2 scale-75">
+            <CosmicClock size={200} />
+        </div>
 
-            <div className="bg-white rounded-2xl p-4 text-black space-y-3 shadow-xl">
-               <div className="flex justify-between border-b border-black/5 pb-2">
-                 <h2 className="font-black text-xs uppercase">Cuerpo</h2>
-                 <Dumbbell size={14}/>
-               </div>
-               <div className="flex items-center gap-3"><Wind size={16} className="text-blue-500"/><span className="text-[11px] font-bold">{BREATH_DB[idx]?.name || "Respiración"}</span></div>
-               <div className="flex items-center gap-3"><PersonStanding size={16} className="text-purple-500"/><span className="text-[11px] font-bold">{STRETCH_DB[idx]?.name || "Estiramiento"}</span></div>
-               <div className="flex items-center gap-3"><Dumbbell size={16} /><span className="text-[11px] font-bold">{GYM_DB[idx]?.name || "Entreno"}</span></div>
-            </div>
+        <div className="bg-white rounded-2xl p-4 text-black space-y-3 shadow-xl">
+           <div className="flex justify-between border-b border-black/5 pb-2">
+             <h2 className="font-black text-xs uppercase">Cuerpo</h2>
+             <Dumbbell size={14}/>
+           </div>
+           <div className="flex items-center gap-3"><Wind size={16} className="text-blue-500"/><span className="text-[11px] font-bold">{BREATH_DB[idx]?.name || "Respiración"}</span></div>
+           <div className="flex items-center gap-3"><PersonStanding size={16} className="text-purple-500"/><span className="text-[11px] font-bold">{STRETCH_DB[idx]?.name || "Estiramiento"}</span></div>
+           <div className="flex items-center gap-3"><Dumbbell size={16} /><span className="text-[11px] font-bold">{GYM_DB[idx]?.name || "Entreno"}</span></div>
+        </div>
 
-            <div className="bg-[#cc0000] rounded-2xl p-6 text-center shadow-xl">
-               <Hammer size={24} className="mx-auto mb-2 opacity-50"/>
-               <h2 className="font-black text-lg">TRABAJO DURO</h2>
-            </div>
+        <div className="bg-[#cc0000] rounded-2xl p-6 text-center shadow-xl">
+           <Hammer size={24} className="mx-auto mb-2 opacity-50 text-white"/>
+           <h2 className="font-black text-lg text-white">TRABAJO DURO</h2>
+        </div>
 
-            <div className="bg-yellow-400 rounded-2xl p-5 text-black shadow-xl">
-               <div className="flex justify-between mb-2">
-                 <h2 className="font-black text-xs uppercase">Espíritu</h2>
-                 <Brain size={16}/>
-               </div>
-               <p className="text-[11px] italic font-serif font-bold leading-tight">"{QUOTES_SPIRIT_DB[idx]?.[0] || "Paz interior."}"</p>
-            </div>
-          </>
-        ) : (
-          <div className="animate-in slide-in-from-right duration-300">
-            <button onClick={() => setView('HOME')} className="mb-4 flex items-center gap-2 text-xs font-bold"><ChevronLeft size={16}/> Volver</button>
-          </div>
-        )}
+        <div className="bg-yellow-400 rounded-2xl p-5 text-black shadow-xl">
+           <div className="flex justify-between mb-2">
+             <h2 className="font-black text-xs uppercase">Espíritu</h2>
+             <Brain size={16}/>
+           </div>
+           <p className="text-[11px] italic font-serif font-bold leading-tight">"{QUOTES_SPIRIT_DB[idx]?.[0] || "Paz interior."}"</p>
+        </div>
       </div>
     </div>
   );
